@@ -462,7 +462,7 @@ public class Viewport<T> {
 			final Rectangle viewportArea = getViewportArea(gc);
 			int columnHeaderX = viewportArea.x + gridModel.getStyleRegistry().getCellSpacingHorizontal();			
 	
-			for (int columnIndex=firstColumnIndex; columnIndex<lastColumnIndex; columnIndex++) {						
+			for (int columnIndex=firstColumnIndex; columnIndex<=lastColumnIndex; columnIndex++) {						
 				final Column column = gridModel.getColumns().get(columnIndex);
 				final int columnWidth = getColumnWidth(columnHeaderX, column/*, false*/);
 				
@@ -504,7 +504,7 @@ public class Viewport<T> {
 			// A column header row has been clicked.
 			//
 			for (final Row<T> row : gridModel.getColumnHeaderRows()) {
-				currentY += grid.getRowHeight(row);
+				currentY += (grid.getRowHeight(row) + gridModel.getStyleRegistry().getCellSpacingVertical());
 
 				if (y <= currentY) {
 					return -1;
@@ -522,7 +522,7 @@ public class Viewport<T> {
 				
 				if (rowIndex < gridModel.getRows().size()) {
 					final Row<T> row = gridModel.getRows().get(rowIndex);
-					currentY += grid.getRowHeight(row);
+					currentY += (grid.getRowHeight(row) + gridModel.getStyleRegistry().getCellSpacingVertical());
 
 					if (y <= currentY) {
 						return rowIndex;
@@ -571,7 +571,7 @@ public class Viewport<T> {
 				return currentY;
 			}
 
-			currentY += grid.getRowHeight(current);
+			currentY += (grid.getRowHeight(current) + gridModel.getStyleRegistry().getCellSpacingVertical());
 		}
 
 		return -1;
