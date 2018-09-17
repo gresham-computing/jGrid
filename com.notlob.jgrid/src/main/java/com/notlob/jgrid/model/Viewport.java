@@ -430,7 +430,7 @@ public class Viewport<T> {
 	public int getColumnViewportX(final GC gc, final Column column) {
 		int currentX = getViewportArea(gc).x;
 
-		for (int columnIndex=getFirstColumnIndex(); columnIndex<getLastVisibleColumnIndex(); columnIndex++) {
+		for (int columnIndex=getFirstColumnIndex(); columnIndex<=getLastVisibleColumnIndex(); columnIndex++) {
 			final Column current = gridModel.getColumns().get(columnIndex);
 			
 			if (current == column) {
@@ -497,7 +497,7 @@ public class Viewport<T> {
 	 */
 	public int getRowIndexByY(final int y, final GC gc) {
 		final Rectangle viewportArea = getViewportArea(gc);
-		int currentY = viewportArea.y;
+		int currentY = viewportArea.y + (gridModel.getStyleRegistry().getCellSpacingVertical() / 2);
 
 		if ((y >= 0) && (y < currentY)) {
 			//
@@ -515,7 +515,7 @@ public class Viewport<T> {
 			//
 			// A data row (or row number) has been clicked.
 			//
-			for (int rowIndex=getFirstRowIndex(); rowIndex<getLastVisibleRowIndex(); rowIndex++) {
+			for (int rowIndex=getFirstRowIndex(); rowIndex<=getLastVisibleRowIndex(); rowIndex++) {
 				if (rowIndex == -1) {
 					return -1;
 				}

@@ -138,7 +138,7 @@ public class SelectionRenderer<T> extends Renderer<T> {
 		selectionRegion.height= -1;
 		
 		if (anchorColumn != null) {						
-			for (int columnIndex=viewport.getFirstColumnIndex(); columnIndex<viewport.getLastColumnIndex(); columnIndex++) {
+			for (int columnIndex=viewport.getFirstColumnIndex(); columnIndex<=viewport.getLastColumnIndex(); columnIndex++) {
 				final Column column = gridModel.getColumns().get(columnIndex);
 				
 				if (column == anchorColumn) {
@@ -146,7 +146,7 @@ public class SelectionRenderer<T> extends Renderer<T> {
 						final Row<T> row = gridModel.getRows().get(rowIndex);
 	
 						if (row.getElement() == element) {
-							selectionRegion.y = rowLocation.y;
+							selectionRegion.y = rowLocation.y + (styleRegistry.getCellSpacingVertical() * 2);
 							selectionRegion.height = grid.getRowHeight(row);
 							selectionRegion.width = viewport.getColumnWidth(selectionRegion.x, anchorColumn);
 					
@@ -191,7 +191,7 @@ public class SelectionRenderer<T> extends Renderer<T> {
 			if (row.isSelected()) {
 				if (inSelection) {
 					//
-					// Expand the selction region.
+					// Expand the selection region.
 					//
 					selectionRegion.height += grid.getRowHeight(row);
 
@@ -200,7 +200,7 @@ public class SelectionRenderer<T> extends Renderer<T> {
 					// Start a new selection region.
 					//
 					selectionRegion.x = rowLocation.x;
-					selectionRegion.y = rowLocation.y;
+					selectionRegion.y = rowLocation.y + styleRegistry.getCellSpacingVertical();
 					selectionRegion.height = grid.getRowHeight(row);
 
 					//

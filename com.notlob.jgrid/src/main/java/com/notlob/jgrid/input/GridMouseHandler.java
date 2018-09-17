@@ -116,8 +116,8 @@ public class GridMouseHandler<T> extends MouseAdapter implements MouseMoveListen
 			hideTooltip();
 			
 			if (resizing != null) {
-				resizeColumn(e.x);			
-	
+				resizeColumn(e.x);
+				
 			} else if (repositioningDetect != null) {
 				checkForColumnMove(e.x);
 				
