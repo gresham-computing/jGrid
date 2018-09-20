@@ -471,10 +471,12 @@ public class Viewport<T> {
 				//
 				switch (operation) {
 					case RESIZE:
-						columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
-						
-						if ((x > (columnHeaderX - RESIZE_DEADZONE)) && (x < (columnHeaderX + RESIZE_DEADZONE))) {
-							return column;
+						if(columnIndex != lastColumnIndex) {
+							columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
+							
+							if ((x > (columnHeaderX - RESIZE_DEADZONE)) && (x < (columnHeaderX + RESIZE_DEADZONE))) {
+								return column;
+							}
 						}
 						break;
 						
