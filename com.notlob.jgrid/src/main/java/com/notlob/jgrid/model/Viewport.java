@@ -481,7 +481,7 @@ public class Viewport<T> {
 						break;
 						
 					case REPOSITION:
-						if ((x >= (columnHeaderX + RESIZE_DEADZONE)) && (x <= (columnHeaderX + column.getWidth() - RESIZE_DEADZONE))) {
+						if ((x >= (columnHeaderX + RESIZE_DEADZONE)) && (x <= (columnHeaderX + columnWidth - RESIZE_DEADZONE))) {
 							return column;
 						}
 						
