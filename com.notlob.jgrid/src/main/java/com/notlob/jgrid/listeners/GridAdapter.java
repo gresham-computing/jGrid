@@ -77,6 +77,14 @@ public class GridAdapter<T> implements IGridListener<T> {
 	}
 	
 	@Override
+	public void columnPinned(Column column) {
+	}
+	
+	@Override
+	public void columnUnpinned(Column column) {	
+	}
+	
+	@Override
 	public void rowNumbersVisibilityChanged(boolean visible) {
 	}
 	

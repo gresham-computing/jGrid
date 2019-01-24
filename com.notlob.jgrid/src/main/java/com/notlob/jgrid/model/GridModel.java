@@ -120,6 +120,8 @@ public class GridModel<T> {
 		void columnMoved(final Column column);
 		void columnAboutToSort(final Column column);
 		void columnSorted(final Column column);
+		void columnPinned(final Column column);
+		void columnUnpinned(final Column column);
 		void rowNumbersVisibilityChanged(final boolean visible);
 		void groupSelectorVisibilityChanged(final boolean visible);
 	}
@@ -1058,6 +1060,18 @@ public class GridModel<T> {
 		}
 	}
 	
+	public void fireColumnPinnedEvent(Column column) {
+		for (final IModelListener<T> listener : listeners) {
+			listener.columnPinned(column);
+		}
+	}
+	
+	public void fireColumnUnpinnedEvent(Column column) {
+		for (final IModelListener<T> listener : listeners) {
+			listener.columnUnpinned(column);
+		}
+	}
+	
 	public void fireRowNumbersVisibilityChanged(final boolean visible) {
 		for (final IModelListener<T> listener : listeners) {
 			listener.rowNumbersVisibilityChanged(visible);
@@ -1121,12 +1135,14 @@ public class GridModel<T> {
 		column.setPinned(true);
 		
 		fireChangeEvent();
+		fireColumnPinnedEvent(column);
 	}
 	
 	public void unpinColumn(final Column column) {
 		column.setPinned(false);
 		pinnedColumns.remove(column);
 		fireChangeEvent();
+		fireColumnUnpinnedEvent(column);
 	}
 	
 	public boolean isHeaderRow(final Row<T> row) {

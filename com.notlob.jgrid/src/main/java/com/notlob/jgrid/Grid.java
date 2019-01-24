@@ -1344,6 +1344,28 @@ public class Grid<T> extends Composite {
 		}
 		
 		@Override
+		public void columnPinned(Column column) {
+			if (isEventsSuppressed()) {
+				return;
+			}
+			
+			for (final IGridListener<T> listener : listeners) {
+				listener.columnPinned(column);
+			}
+		}
+		
+		@Override
+		public void columnUnpinned(Column column) {
+			if (isEventsSuppressed()) {
+				return;
+			}
+			
+			for (final IGridListener<T> listener : listeners) {
+				listener.columnUnpinned(column);
+			}
+		}
+		
+		@Override
 		public void rowNumbersVisibilityChanged(boolean visible) {
 			if (isEventsSuppressed()) {
 				return;
