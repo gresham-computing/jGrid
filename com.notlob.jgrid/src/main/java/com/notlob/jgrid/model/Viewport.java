@@ -461,32 +461,34 @@ public class Viewport<T> {
 		if ((y >= 0) && (y <= height)) {		
 			final Rectangle viewportArea = getViewportArea(gc);
 			int columnHeaderX = viewportArea.x + gridModel.getStyleRegistry().getCellSpacingHorizontal();			
-	
-			for (int columnIndex=firstColumnIndex; columnIndex<=lastColumnIndex; columnIndex++) {						
-				final Column column = gridModel.getColumns().get(columnIndex);
-				final int columnWidth = getColumnWidth(columnHeaderX, column/*, false*/);
-				
-				//
-				// Note: We bump the columnHeaderX before the check for a resize and after for a reposition.
-				//
-				switch (operation) {
-					case RESIZE:
-						if(columnIndex != lastColumnIndex) {
-							columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
+
+			if(!gridModel.getColumns().isEmpty()) {
+				for (int columnIndex=firstColumnIndex; columnIndex<=lastColumnIndex; columnIndex++) {						
+					final Column column = gridModel.getColumns().get(columnIndex);
+					final int columnWidth = getColumnWidth(columnHeaderX, column/*, false*/);
+					
+					//
+					// Note: We bump the columnHeaderX before the check for a resize and after for a reposition.
+					//
+					switch (operation) {
+						case RESIZE:
+							if(columnIndex != lastColumnIndex) {
+								columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
+								
+								if ((x > (columnHeaderX - RESIZE_DEADZONE)) && (x < (columnHeaderX + RESIZE_DEADZONE))) {
+									return column;
+								}
+							}
+							break;
 							
-							if ((x > (columnHeaderX - RESIZE_DEADZONE)) && (x < (columnHeaderX + RESIZE_DEADZONE))) {
+						case REPOSITION:
+							if ((x >= (columnHeaderX + RESIZE_DEADZONE)) && (x <= (columnHeaderX + columnWidth - RESIZE_DEADZONE))) {
 								return column;
 							}
-						}
-						break;
-						
-					case REPOSITION:
-						if ((x >= (columnHeaderX + RESIZE_DEADZONE)) && (x <= (columnHeaderX + columnWidth - RESIZE_DEADZONE))) {
-							return column;
-						}
-						
-						columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
-						break;
+							
+							columnHeaderX += (columnWidth + gridModel.getStyleRegistry().getCellSpacingHorizontal());
+							break;
+					}
 				}
 			}
 		}
