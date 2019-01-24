@@ -406,6 +406,11 @@ public class Grid<T> extends Composite {
 		gridModel.unpinColumn(column);
 	}
 
+	public List<Column> getPinnedColumns() {
+		checkWidget();
+		return gridModel.getPinnedColumns();
+	}
+	
 	public void groupBy(final List<Column> columns) {
 		checkWidget();
 		gridModel.groupBy(columns);
