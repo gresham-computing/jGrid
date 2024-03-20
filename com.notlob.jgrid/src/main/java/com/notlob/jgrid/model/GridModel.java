@@ -3,6 +3,7 @@ package com.notlob.jgrid.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class GridModel<T> {
 
 	// All column definitions.
 	private final List<Column> allColumns;
+	private final Map<String, Column> allColumnsMap;
 
 	// Rows which have been filtered out - they are not ordered.
 	private final List<Row<T>> hiddenRows;
@@ -135,6 +137,7 @@ public class GridModel<T> {
 		hiddenRows = new ArrayList<>();
 		columns = new ArrayList<>();
 		allColumns = new ArrayList<>();
+		allColumnsMap = new HashMap<>();
 		columnHeaderRows = new ArrayList<>();
 		pinnedColumns = new ArrayList<>();
 		groupByColumns = new ArrayList<>();
@@ -347,6 +350,7 @@ public class GridModel<T> {
 
 		column.setGrid(grid);
 		allColumns.add(column);
+		allColumnsMap.put(column.getColumnId(), column);
 
 		if (column.getSortDirection() != SortDirection.NONE) {
 			getSortModel().sort(column, false, true, false);
@@ -381,6 +385,7 @@ public class GridModel<T> {
 	private void removeColumn(final Column column) {
 		sortModel.removeColumn(column);
 		allColumns.remove(column);
+		allColumnsMap.remove(column.getColumnId());
 		columns.remove(column);
 		groupByColumns.remove(column);
 		pinnedColumns.remove(column);
@@ -458,12 +463,7 @@ public class GridModel<T> {
 	}
 	
 	public Column getColumnById(final String columnId) {
-		for (final Column column : allColumns) {
-			if (column.getColumnId().equalsIgnoreCase(columnId)) {
-				return column;
-			}
-		}
-		return null;
+		return allColumnsMap.get(columnId);
 	}
 
 	/**
