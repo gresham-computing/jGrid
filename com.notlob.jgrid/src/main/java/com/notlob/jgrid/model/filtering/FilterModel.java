@@ -111,12 +111,6 @@ public class FilterModel<T> {
 				// If anything in the group match then this row should be shown OR if it's a parent row, always show it.
 				//
 				matches = filter.matchesWholeGroup(row.getElement(), gridModel.getWholeGroup(row.getElement()));
-//				for (T relative : gridModel.getWholeGroup(row.getElement())) {
-//					if (filter.matches(relative)) {
-//						matches = true;
-//						break;
-//					}
-//				}
 				
 			} else {
 				//
