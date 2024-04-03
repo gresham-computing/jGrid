@@ -1,5 +1,7 @@
 package com.notlob.jgrid.model.filtering;
 
+import java.util.Collection;
+
 /**
  * Filters are added to the filter model and each row in the grid is evaluated against them all.
  *
@@ -29,9 +31,24 @@ public abstract class Filter<T> {
 	}
 
 	//
-	// Return a result with match = true if the filter matches the row's element otherwise null or match = false.
+	// Return a result with match = true if the filter matches the row's element otherwise match = false.
 	//
 	public abstract boolean matches(final T element);
+	
+	/**
+	 * Return a result with match = true if the filter matches any of the row's element otherwise match = false.
+	 * @param element The current element we were on
+	 * @param groupElements The entire group this element was in
+	 * @return
+	 */
+	public boolean matchesWholeGroup(final T element, final Collection<T> groupElements) {
+		for( T groupElement : groupElements ) {
+			if( matches(groupElement) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	//
 	// What to show the user in the UI when this filter is being applied. The parameter allows widget formatting tokens
